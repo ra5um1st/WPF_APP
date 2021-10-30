@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_APP.Model;
 
 namespace WPF_APP.Pages
 {
@@ -34,7 +35,8 @@ namespace WPF_APP.Pages
         {
             try
             {
-                users user = BaseModel.GetContext().users.First(_user => _user.Login == tb_login.Text && _user.Password == pb_password.Password);
+                string password = pb_password.Password.GetHashCode().ToString();
+                users user = BaseModel.GetContext().users.First(_user => _user.Login == tb_login.Text && _user.Password == password);
                 switch (user.Role_id)
                 {
                     case (int)Roles.ADMINISTRATOR:

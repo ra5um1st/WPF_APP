@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_APP;
+using WPF_APP.Model;
 
 namespace WPF_APP.Pages
 {
@@ -36,64 +37,76 @@ namespace WPF_APP.Pages
             cb_gender.DisplayMemberPath = "Value";
         }
             
-        private void btnRegistate_Click(object sender, RoutedEventArgs e)
+        public void btnRegistate_Click(object sender, RoutedEventArgs e)
         {
-            if (!StringExtension.IsDigitsOnly(tb_telephone.Text))
+            users user = RegistrateUser();
+            if (user != null)
+            {
+                MainFrame.GetFrame().Navigate(new Page_User(user));
+            }
+        }
+
+        public void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.GetFrame().Navigate(new Page_Login());
+        }
+        public users RegistrateUser()
+        {
+            if(tb_email.Text == string.Empty || tb_login.Text == string.Empty  || pb_password.Password == string.Empty)
+            {
+                MessageBox.Show("Заполните обязательные поля!");
+                return null;
+            }
+            else if (!StringExtension.IsDigitsOnly(tb_telephone.Text))
             {
                 MessageBox.Show("Номер содержит некорректные символы. Убедитесь, что номер состоит только из цифр");
+                return null;
             }
-            else if(pb_password.Password != pb_passwordVerification.Password)
+            else if (pb_password.Password.GetHashCode() != pb_passwordVerification.Password.GetHashCode())
             {
                 MessageBox.Show("Введенные пароли не совпадают. Введите пароли еще раз.");
                 pb_password.Password = "";
                 pb_passwordVerification.Password = "";
+                return null;
             }
             else
             {
-                users user = new users() { EMail = tb_email.Text, Login = tb_login.Text, Password = pb_password.Password, Role_id = (int)Roles.USER };
-                BaseModel.GetContext().users.Add(user);
-
                 try
                 {
-                    if (cb_gender.SelectedValue != null && StringExtension.IsDigitsOnly(tb_telephone.Text))
-                    {
-                        persons person = new persons() { Id = user.Id, FirstName = tb_firstname.Text, LastName = tb_lastname.Text, Gender_id = (int)cb_gender.SelectedValue, Telephone = Convert.ToInt32(tb_telephone.Text), DateOfBirth = dp_dateofbirth.SelectedDate };
-                        BaseModel.GetContext().persons.Add(person);
+                    users user = new users() { EMail = tb_email.Text, Login = tb_login.Text, Password = pb_password.Password.GetHashCode().ToString(), Role_id = (int)Roles.USER };
+                    persons person = new persons();
 
-                    }
-                    else if (cb_gender.SelectedValue == null && !StringExtension.IsDigitsOnly(tb_telephone.Text))
+                    if (cb_gender.SelectedValue != null)
                     {
-                        persons person = new persons() { Id = user.Id, FirstName = tb_firstname.Text, LastName = tb_lastname.Text, Gender_id = null, Telephone = null, DateOfBirth = dp_dateofbirth.SelectedDate };
-                        BaseModel.GetContext().persons.Add(person);
+                        person.Gender_id = (int)cb_gender.SelectedValue;
                     }
-                    else if (cb_gender.SelectedValue == null)
+                    if (StringExtension.IsDigitsOnly(tb_telephone.Text))
                     {
-                        persons person = new persons() { Id = user.Id, FirstName = tb_firstname.Text, LastName = tb_lastname.Text, Gender_id = null, Telephone = Convert.ToInt32(tb_telephone.Text), DateOfBirth = dp_dateofbirth.SelectedDate };
-                        BaseModel.GetContext().persons.Add(person);
+                        if(tb_telephone.Text != string.Empty)
+                        {
+                            person.Telephone = Convert.ToInt32(tb_telephone.Text);
+                        }
+                        else
+                        {
+                            person.Telephone = null;
+                        }
                     }
-                    else
-                    {
-                        persons person = new persons() { Id = user.Id, FirstName = tb_firstname.Text, LastName = tb_lastname.Text, Gender_id = (int)cb_gender.SelectedValue, Telephone = null, DateOfBirth = dp_dateofbirth.SelectedDate };
-                        BaseModel.GetContext().persons.Add(person);
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка при обновлении данных");
-                }
 
-                finally
-                {
+                    person.FirstName = tb_firstname.Text;
+                    person.LastName = tb_lastname.Text;
+                    person.DateOfBirth = dp_dateofbirth.SelectedDate;
+                    BaseModel.GetContext().users.Add(user);
+                    BaseModel.GetContext().persons.Add(person);
                     BaseModel.GetContext().SaveChanges();
-                    MessageBox.Show("Вы успешно зарегистрировались");
-                    MainFrame.GetFrame().Navigate(new Page_User(user));
+                    MessageBox.Show("Регистрация пользователя завершена успешно!");
+                    return user;
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("Ошибка при добавлнении данных!\n"+ e.Message);
+                    return null;
                 }
             }
-        }
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.GetFrame().Navigate(new Page_Login());
         }
     }
 }

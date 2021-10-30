@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище WPF_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище WPF_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="gadgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="genders">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,6 +29,14 @@
           <Property Name="Gender_id" Type="int" />
           <Property Name="Telephone" Type="int" />
           <Property Name="DateOfBirth" Type="date" />
+        </EntityType>
+        <EntityType Name="persons_gadgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Person_id" Type="int" Nullable="false" />
+          <Property Name="Gadget_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
@@ -50,6 +65,34 @@
           <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Role_id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_persons_gadgets_gadgets">
+          <End Role="gadgets" Type="Self.gadgets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="persons_gadgets" Type="Self.persons_gadgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gadgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="persons_gadgets">
+              <PropertyRef Name="Gadget_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_persons_gadgets_persons">
+          <End Role="persons" Type="Self.persons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="persons_gadgets" Type="Self.persons_gadgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="persons_gadgets">
+              <PropertyRef Name="Person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_persons_genders">
           <End Role="genders" Type="Self.genders" Multiplicity="0..1" />
           <End Role="persons" Type="Self.persons" Multiplicity="*" />
@@ -89,11 +132,21 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище WPF_DBModelContainer">
+          <EntitySet Name="gadgets" EntityType="Self.gadgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genders" EntityType="Self.genders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="persons" EntityType="Self.persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="persons_gadgets" EntityType="Self.persons_gadgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_persons_gadgets_gadgets" Association="Self.FK_persons_gadgets_gadgets">
+            <End Role="gadgets" EntitySet="gadgets" />
+            <End Role="persons_gadgets" EntitySet="persons_gadgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_persons_gadgets_persons" Association="Self.FK_persons_gadgets_persons">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="persons_gadgets" EntitySet="persons_gadgets" />
+          </AssociationSet>
           <AssociationSet Name="FK_persons_genders" Association="Self.FK_persons_genders">
             <End Role="genders" EntitySet="genders" />
             <End Role="persons" EntitySet="persons" />
@@ -107,8 +160,7 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WPF_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -132,6 +184,7 @@
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="genders" Relationship="Self.FK_persons_genders" FromRole="persons" ToRole="genders" />
           <NavigationProperty Name="users" Relationship="Self.FK_persons_users" FromRole="persons" ToRole="users" />
+          <NavigationProperty Name="persons_gadgets" Relationship="WPF_DBModel.FK_persons_gadgets_persons" FromRole="persons" ToRole="persons_gadgets" />
         </EntityType>
         <EntityType Name="roles">
           <Key>
@@ -219,7 +272,63 @@
             <End Role="roles" EntitySet="roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <EntitySet Name="gadgets" EntityType="WPF_DBModel.gadgets" />
+          <EntitySet Name="persons_gadgets" EntityType="WPF_DBModel.persons_gadgets" />
+          <AssociationSet Name="FK_persons_gadgets_gadgets" Association="WPF_DBModel.FK_persons_gadgets_gadgets">
+            <End Role="gadgets" EntitySet="gadgets" />
+            <End Role="persons_gadgets" EntitySet="persons_gadgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_persons_gadgets_persons" Association="WPF_DBModel.FK_persons_gadgets_persons">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="persons_gadgets" EntitySet="persons_gadgets" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="gadgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="persons_gadgets" Relationship="WPF_DBModel.FK_persons_gadgets_gadgets" FromRole="gadgets" ToRole="persons_gadgets" />
+        </EntityType>
+        <EntityType Name="persons_gadgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Person_id" Type="Int32" Nullable="false" />
+          <Property Name="Gadget_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="gadgets" Relationship="WPF_DBModel.FK_persons_gadgets_gadgets" FromRole="persons_gadgets" ToRole="gadgets" />
+          <NavigationProperty Name="persons" Relationship="WPF_DBModel.FK_persons_gadgets_persons" FromRole="persons_gadgets" ToRole="persons" />
+        </EntityType>
+        <Association Name="FK_persons_gadgets_gadgets">
+          <End Type="WPF_DBModel.gadgets" Role="gadgets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WPF_DBModel.persons_gadgets" Role="persons_gadgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gadgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="persons_gadgets">
+              <PropertyRef Name="Gadget_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_persons_gadgets_persons">
+          <End Type="WPF_DBModel.persons" Role="persons" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="WPF_DBModel.persons_gadgets" Role="persons_gadgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="persons_gadgets">
+              <PropertyRef Name="Person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -273,6 +382,23 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gadgets">
+            <EntityTypeMapping TypeName="WPF_DBModel.gadgets">
+              <MappingFragment StoreEntitySet="gadgets">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="persons_gadgets">
+            <EntityTypeMapping TypeName="WPF_DBModel.persons_gadgets">
+              <MappingFragment StoreEntitySet="persons_gadgets">
+                <ScalarProperty Name="Gadget_id" ColumnName="Gadget_id" />
+                <ScalarProperty Name="Person_id" ColumnName="Person_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

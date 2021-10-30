@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF_APP
+namespace WPF_APP.Model
 {
     using System;
     using System.Data.Entity;
@@ -30,5 +30,7 @@ namespace WPF_APP
         public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<users> users { get; set; }
+        public virtual DbSet<gadgets> gadgets { get; set; }
+        public virtual DbSet<persons_gadgets> persons_gadgets { get; set; }
     }
 }

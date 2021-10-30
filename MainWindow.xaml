@@ -19,7 +19,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Border Background="Bisque" Grid.Column="0">
-            <Image Source="Resourses\Images\logo.png"/>
+            <Image Source="/Resourses\Images\logo.png"/>
         </Border>
         <Border Background="Bisque" Grid.Column="1">
         </Border>

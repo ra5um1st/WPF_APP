@@ -7,20 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF_APP
+namespace WPF_APP.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class users
+    public partial class persons_gadgets
     {
         public int Id { get; set; }
-        public string EMail { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public int Role_id { get; set; }
+        public int Person_id { get; set; }
+        public int Gadget_id { get; set; }
     
+        public virtual gadgets gadgets { get; set; }
         public virtual persons persons { get; set; }
-        public virtual roles roles { get; set; }
     }
 }

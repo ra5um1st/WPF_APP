@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_APP.Model;
 
 namespace WPF_APP.Pages
 {
@@ -46,6 +47,7 @@ namespace WPF_APP.Pages
                     cb_gender.SelectedValue = user.persons.genders.Id;
                 }
 
+                tb_telephone.Text = user.persons.Telephone.ToString();
                 dp_dateofbirth.SelectedDate = user.persons.DateOfBirth;
             }
             catch

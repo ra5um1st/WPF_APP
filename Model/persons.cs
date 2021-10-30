@@ -7,23 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WPF_APP
+namespace WPF_APP.Model
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class roles
+    public partial class persons
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public roles()
+        public persons()
         {
-            this.users = new HashSet<users>();
+            this.persons_gadgets = new HashSet<persons_gadgets>();
         }
     
         public int Id { get; set; }
-        public string Value { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<int> Gender_id { get; set; }
+        public Nullable<int> Telephone { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
     
+        public virtual genders genders { get; set; }
+        public virtual users users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<users> users { get; set; }
+        public virtual ICollection<persons_gadgets> persons_gadgets { get; set; }
     }
 }

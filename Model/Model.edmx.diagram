@@ -13,6 +13,10 @@
         <AssociationConnector Association="WPF_DBModel.FK_persons_genders" ManuallyRouted="false" />
         <AssociationConnector Association="WPF_DBModel.FK_persons_users" ManuallyRouted="false" />
         <AssociationConnector Association="WPF_DBModel.FK_users_roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WPF_DBModel.gadgets" Width="1.5" PointX="5.25" PointY="7.625" />
+        <EntityTypeShape EntityType="WPF_DBModel.persons_gadgets" Width="1.5" PointX="7.5" PointY="1.375" />
+        <AssociationConnector Association="WPF_DBModel.FK_persons_gadgets_gadgets" />
+        <AssociationConnector Association="WPF_DBModel.FK_persons_gadgets_persons" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

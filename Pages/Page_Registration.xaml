@@ -27,10 +27,10 @@
                     <TextBox Style="{StaticResource DefaultTextBox}" x:Name="tb_login"/>
                 </GroupBox>
                 <GroupBox Header="*Пароль" Style="{StaticResource DefaultGroupBox}">
-                    <PasswordBox x:Name="pb_password"/>
+                    <PasswordBox x:Name="pb_password" VerticalContentAlignment="Center"/>
                 </GroupBox>
                 <GroupBox Header="*Повторите пароль" Style="{StaticResource DefaultGroupBox}">
-                    <PasswordBox x:Name="pb_passwordVerification"/>
+                    <PasswordBox x:Name="pb_passwordVerification" VerticalContentAlignment="Center"/>
                 </GroupBox>
                 <TextBlock Name="Remark" Text="Remark" Style="{StaticResource Text}" Margin="10 15 0 0"/>
 
@@ -43,10 +43,10 @@
                     <TextBox Style="{StaticResource DefaultTextBox}" x:Name="tb_lastname"/>
                 </GroupBox>
                 <GroupBox Header="Пол" Style="{StaticResource DefaultGroupBox}">
-                    <ComboBox x:Name="cb_gender" IsEditable="False"/>
+                    <ComboBox x:Name="cb_gender" IsEditable="False" VerticalContentAlignment="Center"/>
                 </GroupBox>
                 <GroupBox Header="Дата рождения" Style="{StaticResource DefaultGroupBox}">
-                    <DatePicker Name="dp_dateofbirth"/>
+                    <DatePicker Name="dp_dateofbirth" VerticalContentAlignment="Center"/>
                 </GroupBox>
                 <GroupBox Header="Телефон" Style="{StaticResource DefaultGroupBox}">
                     <TextBox Style="{StaticResource DefaultTextBox}" x:Name="tb_telephone"/>
