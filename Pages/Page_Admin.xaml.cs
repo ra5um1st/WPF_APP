@@ -66,7 +66,6 @@ namespace WPF_APP.Pages
         }
         private void DeleteButton_Click(object sender, EventArgs args)
         {
-            Button button = (Button)sender;
             if (UserList.SelectedItem != null)
             {
                 switch (MessageBox.Show("Вы точно хотите удалить выбранного пользователя?", "Удаление", MessageBoxButton.YesNo))
@@ -94,16 +93,6 @@ namespace WPF_APP.Pages
             {
                 MessageBox.Show("Вы не выбрали пользователя для удаления.");
             }
-        }
-
-        private void UserList_Selected(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Click!");
-        }
-
-        private void UserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MessageBox.Show("Click!!!!!");
         }
 
         private void DeleteButton_Loaded(object sender, RoutedEventArgs e)

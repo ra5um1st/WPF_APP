@@ -30,31 +30,29 @@
                     Margin="20 0 5 0"/>
             <Button Style="{StaticResource MenuButton}" x:Name="btn_account" Content="Аккаунт" Click="AccountButton_Click"
                     Margin="5"/>
-            <Button Style="{StaticResource MenuButton}" Content="Найти"                         
-                    Margin="5"/>
-            <Button Style="{StaticResource MenuButton}" Content="Поймать"                       
-                    Margin="5"/>
-            <Button Style="{StaticResource MenuButton}" Content="Остановить"                    
-                    Margin="5"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20 20 0 0">
-                <StackPanel Orientation="Vertical">
+        <ScrollViewer Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition  Width="350"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
                     <TextBlock Style="{StaticResource Text}" Text="Имя"           Margin="0 15 20 0" TextDecorations="Underline"/>
                     <TextBlock Style="{StaticResource Text}" Text="Фамилия"       Margin="0 20 20 0" TextDecorations="Underline"/>
                     <TextBlock Style="{StaticResource Text}" Text="Пол"           Margin="0 25 20 0" TextDecorations="Underline"/>
                     <TextBlock Style="{StaticResource Text}" Text="Дата рождения" Margin="0 20 20 0" TextDecorations="Underline"/>
                     <TextBlock Style="{StaticResource Text}" Text="Телефон"       Margin="0 25 20 0" TextDecorations="Underline"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" MinWidth="370" MaxWidth="420">
+                <StackPanel Orientation="Vertical" Grid.Column="1">
                     <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_firstname" Text="Нет"            IsEnabled="false"/>
                     <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_lastname" Text="Нет"             IsEnabled="false"/>
                     <ComboBox Height="40" Name="cb_gender" IsEditable="False"                                  IsEnabled="false"/>
                     <DatePicker Height="40" Name="dp_dateofbirth"                                              IsEnabled="false"/>
                     <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_telephone" Text="Нет"            IsEnabled="false"/>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </ScrollViewer>
 
         <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">

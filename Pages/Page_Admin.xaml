@@ -9,24 +9,74 @@
       Title="Page_Admin">
     <Page.Resources>
         <DataTemplate x:Key="UserTemplate" DataType="{x:Type ListBoxItem}">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Style="{StaticResource Text}" Text="Имя"           Margin="0 15 20 0" TextDecorations="Underline"/>
-                    <TextBlock Style="{StaticResource Text}" Text="Фамилия"       Margin="0 20 20 0" TextDecorations="Underline"/>
-                    <TextBlock Style="{StaticResource Text}" Text="Пол"           Margin="0 25 20 0" TextDecorations="Underline"/>
-                    <TextBlock Style="{StaticResource Text}" Text="Дата рождения" Margin="0 20 20 0" TextDecorations="Underline"/>
-                    <TextBlock Style="{StaticResource Text}" Text="Телефон"       Margin="0 25 20 0" TextDecorations="Underline"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="350"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Column="0">
+                    <TextBlock 
+                        Style="{StaticResource Text}" 
+                        Text="Имя"
+                        Margin="0 15 20 0" 
+                        TextDecorations="Underline"/>
+                    <TextBlock 
+                        Style="{StaticResource Text}" 
+                        Text="Фамилия"       
+                        Margin="0 20 20 0" 
+                        TextDecorations="Underline"/>
+                    <TextBlock 
+                        Style="{StaticResource Text}" 
+                        Text="Пол"           
+                        Margin="0 25 20 0" 
+                        TextDecorations="Underline"/>
+                    <TextBlock 
+                        Style="{StaticResource Text}" 
+                        Text="Дата рождения" 
+                        Margin="0 20 20 0" 
+                        TextDecorations="Underline"/>
+                    <TextBlock 
+                        Style="{StaticResource Text}" 
+                        Text="Телефон"       
+                        Margin="0 25 20 0" 
+                        TextDecorations="Underline"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Width="300">
-                    <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_firstname" Text="{Binding FirstName}" IsEnabled="false"/>
-                    <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_lastname"  Text="{Binding LastName}"  IsEnabled="false"/>
-                    <ComboBox Height="40" Name="cb_gender" IsEditable="False" IsEnabled="false" SelectedValue="{Binding genders.Id}" 
-                              VerticalContentAlignment="Center" Loaded="cb_gender_Loaded" Uid="{Binding Id}"/>
-                    <DatePicker Height="40" Name="dp_dateofbirth" SelectedDate="{Binding DateOfBirth}"
-                                VerticalContentAlignment="Center" IsEnabled="false"/>
-                    <TextBox Style="{StaticResource DefaultTextBox}" Name="tb_telephone" Text="{Binding Telephone}" IsEnabled="false"/>
+                
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Column="1">
+                    <TextBox 
+                        Style="{StaticResource DefaultTextBox}" 
+                        Name="tb_firstname" Text="{Binding FirstName}" 
+                        IsEnabled="false"/>
+                    <TextBox 
+                        Style="{StaticResource DefaultTextBox}" 
+                        Name="tb_lastname"  Text="{Binding LastName}"  
+                        IsEnabled="false"/>
+                    <ComboBox 
+                        Height="40" 
+                        Name="cb_gender" 
+                        IsEditable="False" 
+                        IsEnabled="false" 
+                        SelectedValue="{Binding genders.Id}" 
+                        VerticalContentAlignment="Center" 
+                        Loaded="cb_gender_Loaded" 
+                        Uid="{Binding Id}"/>
+                    <DatePicker 
+                        Height="40" 
+                        Name="dp_dateofbirth" 
+                        SelectedDate="{Binding DateOfBirth}"
+                        VerticalContentAlignment="Center" 
+                        IsEnabled="false"/>
+                    <TextBox 
+                        Style="{StaticResource DefaultTextBox}" 
+                        Name="tb_telephone" 
+                        Text="{Binding Telephone}" 
+                        IsEnabled="false"/>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
     <Grid>
@@ -39,26 +89,50 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="White" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Border Background="DarkMagenta" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <Border Background="AntiqueWhite" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <Border 
+            Background="White" 
+            Grid.ColumnSpan="2" 
+            Grid.RowSpan="2"/>
+        <Border 
+            Background="DarkMagenta" 
+            Grid.Column="0" Grid.Row="0" 
+            Grid.ColumnSpan="2"/>
+        <Border 
+            Background="AntiqueWhite" 
+            Grid.Column="0" Grid.Row="1" 
+            Grid.RowSpan="2" 
+            Grid.ColumnSpan="2"/>
         
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Background="LightSkyBlue" Orientation="Horizontal">
-            <Button Style="{StaticResource DefaultButton}" Content="Добавить пользователя" Margin="15 0 0 0" Click="InsertButton_Click"/>
-            <Button Name="DeleteButton" Style="{StaticResource DefaultButton}" Content="Удалить пользователя" Margin="15 0 0 0" Click="DeleteButton_Click" Loaded="DeleteButton_Loaded"/>
+            <Button Style="{StaticResource DefaultButton}" Content="+" FontSize="16" Margin="15 0 0 0" Click="InsertButton_Click"/>
+            <Button Name="DeleteButton" Style="{StaticResource DefaultButton}" Content="-" FontSize="16" Margin="15 0 0 0" Click="DeleteButton_Click" Loaded="DeleteButton_Loaded"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <ListBox x:Name="UserList" ItemTemplate="{StaticResource UserTemplate}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Loaded="UserList_Loaded" SelectionChanged="UserList_SelectionChanged">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+        <ScrollViewer 
+            Grid.Column="0" 
+            Grid.Row="2" 
+            Grid.RowSpan="2" 
+            Grid.ColumnSpan="2" 
+            VerticalScrollBarVisibility="Auto" 
+            HorizontalScrollBarVisibility="Disabled">
+            <ListBox 
+                x:Name="UserList" 
+                ItemTemplate="{StaticResource UserTemplate}" 
+                Grid.Column="0" Grid.Row="1" 
+                Grid.ColumnSpan="2" 
+                Loaded="UserList_Loaded">
             </ListBox>
         </ScrollViewer>
 
-        <Button Style="{StaticResource DefaultButton}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0 0 15 0" 
-                x:Name="btnExit" Content="Выйти" Click="ExitButton_Click"/>
+        <Button 
+            Style="{StaticResource DefaultButton}" 
+            Grid.Column="0" 
+            Grid.Row="0" 
+            Grid.ColumnSpan="2" 
+            HorizontalAlignment="Right" 
+            Margin="0 0 15 0" 
+            x:Name="btnExit" 
+            Content="Выйти" 
+            Click="ExitButton_Click"/>
     </Grid>
 </Page>

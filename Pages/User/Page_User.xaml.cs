@@ -27,7 +27,6 @@ namespace WPF_APP.Pages
         public Page_User(users user)
         {
             InitializeComponent();
-
             this.user = user;
             InitializeData();
         }

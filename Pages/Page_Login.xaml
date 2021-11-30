@@ -31,6 +31,28 @@
         </TextBlock>
         <PasswordBox x:Name="pb_password" Margin="200 25 200 0" MaxWidth="400" PasswordChar="*"
                         Height="40" FontSize="18" VerticalContentAlignment="Center" Padding="7 0 0 0"/>
+        <TextBlock 
+            x:Name="PasswordHint" 
+            Margin="200 25 200 0" 
+            Padding="7 0 0 0" 
+            Text="Пароль" 
+            IsHitTestVisible="False" 
+            MaxWidth="400">
+            
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Password, ElementName=pb_password}" Value="12">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <Button x:Name="btnLogin" Style="{StaticResource DefaultButton}" Margin="200 130 200 0" Content="Войти" FontSize="14" MaxWidth="400" Click="btnLogin_Click"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="400">
             <TextBlock Grid.Row="1" Text="Если вы здесь впервые, то " FontSize="14" Height="20"/>
